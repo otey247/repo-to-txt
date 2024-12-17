@@ -173,7 +173,7 @@ docker-compose up -d
 
 ## Bug Reports
 
-Please report bugs by opening an issue on GitHub or emailing abinthomasonline@gmail.com.
+Please report bugs by opening an issue on GitHub or emailing [Jump Starts](mailto:jo.otey@sogeti.com).
 
 ## Support
 
