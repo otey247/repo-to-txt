@@ -84,8 +84,28 @@ function displayDirectoryStructure(tree) {
 
         li.appendChild(checkbox);
         appendIcon(li, 'file');
-        li.appendChild(document.createTextNode(name));
-    }
+
+        // Add file name and calculate tokens for non-binary files
+        const isImageFile = /\.(jpg|jpeg|png|gif|ico|svg|webp|bmp)$/i.test(name);
+        const isBinaryFile = /\.(pdf|doc|docx|xls|xlsx|zip|exe|dll|bin)$/i.test(name);
+        
+        if (!isImageFile && !isBinaryFile) {
+            try {
+                // Add async token calculation
+                calculateTokens(item).then(tokenCount => {
+                    const tokenSpan = document.createElement('span');
+                    tokenSpan.className = 'text-gray-500 text-sm';
+                    tokenSpan.textContent = ` (${tokenCount} tokens)`;
+                    li.appendChild(document.createTextNode(name));
+                    li.appendChild(tokenSpan);
+                });
+            } catch (error) {
+                console.error('Error calculating tokens:', error);
+                li.appendChild(document.createTextNode(name));
+            }
+        } else {
+            li.appendChild(document.createTextNode(name));
+        }
 
     function createCollapseButton() {
         const collapseButton = document.createElement('button');
